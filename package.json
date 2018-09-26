@@ -1,0 +1,9 @@
+{
+  "name": "wiki-name-search-bot",
+  "version": "1.0.0",
+  "description": "A Slack bot that can search Wikia domain names",
+  "main": "index.js",
+  "repository": "https://github.com/gbenson-wikia/wiki-name-search-bot.git",
+  "license": "MIT",
+  "private": "true"
+}
