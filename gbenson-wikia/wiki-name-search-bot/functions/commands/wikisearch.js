@@ -1,5 +1,6 @@
-const fetch = require('node-fetch');
+const fetchResults = require('../../lib/fetch_results.js');
 const lib = require('lib')({ token: process.env.STDLIB_TOKEN });
+
 /**
  * /wikisearch
  *
@@ -13,33 +14,5 @@ const lib = require('lib')({ token: process.env.STDLIB_TOKEN });
  * @returns {object}
  */
 module.exports = (user, channel, text = '', command = {}, botToken = null, callback) => {
-    async function makeRequest() {
-        let response;
-        try {
-            response = await fetch(`https://www.wikia.com/api/v1/Wikis/ByString?string=${encodeURIComponent(text)}`);
-        } catch (e) {
-            return `An error occurred when fetching wiki names:${e.toString()}`;
-        }
-
-        let data;
-        try {
-            data = await response.json();
-        } catch (e) {
-            return `An error occurred while parsing the API response: ${e.toString()}`;
-        }
-
-        const links = data.items.map(
-            item => item.domain
-        ).join('\n');
-
-        return `Search results for "${text}":\n${links}`;
-    }
-
-    makeRequest()
-        .then(
-            (response) =>
-                callback(null, {
-                    text: response
-                })
-        );
+    return fetchResults(callback, text);
 };
